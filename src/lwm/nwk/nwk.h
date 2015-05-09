@@ -107,6 +107,8 @@ void NWK_Lock(void);
 void NWK_Unlock(void);
 void NWK_SleepReq(void);
 void NWK_WakeupReq(void);
+void NWK_ResumeReq(void);
+void NWK_PauseReq(void);
 void NWK_TaskHandler(void);
 
 uint8_t NWK_LinearizeLqi(uint8_t lqi);

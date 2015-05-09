@@ -61,6 +61,7 @@
 
 /*- Variables --------------------------------------------------------------*/
 NwkIb_t nwkIb;
+bool enable = true;
 
 /*- Implementations --------------------------------------------------------*/
 
@@ -162,6 +163,16 @@ void NWK_SleepReq(void)
   PHY_Sleep();
 }
 
+void NWK_PauseReq(void)
+{
+  enable = false;
+}
+
+void NWK_ResumeReq(void)
+{
+  enable = true;
+}
+
 /*************************************************************************//**
   @brief Puts network layer to an active state
 *****************************************************************************/
@@ -195,9 +206,11 @@ uint8_t NWK_LinearizeLqi(uint8_t lqi)
 *****************************************************************************/
 void NWK_TaskHandler(void)
 {
-  nwkRxTaskHandler();
-  nwkTxTaskHandler();
-  nwkDataReqTaskHandler();
+  if(enable){
+    nwkRxTaskHandler();
+    nwkTxTaskHandler();
+    nwkDataReqTaskHandler();
+  }
 #ifdef NWK_ENABLE_SECURITY
   nwkSecurityTaskHandler();
 #endif
